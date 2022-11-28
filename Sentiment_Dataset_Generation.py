@@ -37,7 +37,7 @@ if not os.path.exists('data'):
 if not os.path.exists('data/data_extraction'):
     os.mkdir('data/data_extraction')
 
-jakarta = "data/data_extraction/jakarta1.csv"
+piala_dunia = "data/data_extraction/piala_dunia2.csv"
 
 #columns of the csv file
 COLS = ['id', 'created_at', 'source', 'original_text','clean_text',  'lang',
@@ -146,7 +146,7 @@ def write_tweets(keyword, file):
         df = pd.DataFrame(columns=COLS)
     #page attribute in tweepy.cursor and iteration
     for page in tweepy.Cursor(api.search_tweets, q=keyword,
-                              count=20, include_ext_edit_control=False, since_id=start_date, tweet_mode="extended").pages(10):
+                              count=200, include_ext_edit_control=False, since_id=start_date, tweet_mode="extended").pages(100):
         for status in page:
             new_entry = []
             status = status._json
@@ -207,8 +207,8 @@ def write_tweets(keyword, file):
     df.to_csv(csvFile, mode='a', columns=COLS, index=False, encoding="utf-8")
 
 #declare keywords as a query for three categories
-jakarta_keywords = '#jakarta OR ((#covid19 OR covid19) AND (indonesia OR pemerintah)) OR ((#wfh OR wfh) AND (indonesia OR pemerintah)) OR PSBB '
+piala_dunia_keywords = '#PialaDunia2022 OR ((#PialaDunia2022 OR PialaDunia2022) AND (FIFA OR Qatar))'
 
 #call main method passing keywords and file path
 
-write_tweets(jakarta_keywords,jakarta)
+write_tweets(piala_dunia_keywords,piala_dunia)

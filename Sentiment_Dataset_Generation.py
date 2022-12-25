@@ -17,10 +17,10 @@ import ast
 
 #Twitter credentials for the app
 bearer_token = "AAAAAAAAAAAAAAAAAAAAAFmxjgEAAAAAcvzC8Cymvy5EBokzSnNvB6kG0eA%3DttyC7wewD0bYWZcnXb2NR449JAtimZ9ZRqGNuqqBqkpfwZ5Z85"
-consumer_key = "LcftdwP6IJ9NODrGPguIapEuh"
-consumer_secret = "XF5I2CwcDHaxT9pvTYHpWH4M6EdH8JkvvJpmBDOedYpbnphXLR"
-access_token= "1595635150804525056-aj6QvEK7kBN9DxlA0KYfp22RvgtQsY"
-access_token_secret = "PDzNrVfkvj3Twj7usfuLvnxwZlsvEpwOuMlxfKQ5xa74j"
+consumer_key = "w18YGO9bsufdhkSkL5gCugAfA"
+consumer_secret = "xQGMpJvwjKLLMec8AfXK94Oo3d7dC5SXNCQJ8suelfwFjk8hBl"
+access_token= "1595635150804525056-4uIg75VX9E3N4zC0XJRBBnjd1CanTv"
+access_token_secret = "lKViDwCfrHV5WrLf7v8XAQLhz5AYXoaZSrPc3wvVYrZaL"
 
 client = tweepy.Client(consumer_key= consumer_key,consumer_secret= consumer_secret,access_token= access_token,access_token_secret= access_token_secret)
 
@@ -37,7 +37,7 @@ if not os.path.exists('data'):
 if not os.path.exists('data/data_extraction'):
     os.mkdir('data/data_extraction')
 
-piala_dunia = "data/data_extraction/piala_dunia2.csv"
+jakarta = "data/data_extraction/tes3.csv"
 
 #columns of the csv file
 COLS = ['id', 'created_at', 'source', 'original_text','clean_text',  'lang',
@@ -45,8 +45,8 @@ COLS = ['id', 'created_at', 'source', 'original_text','clean_text',  'lang',
         'user_mentions', 'place', 'place_coord_boundaries']
 
 #set two date variables for date range
-start_date = '2022-05-20'
-end_date = '2022-05-21'
+start_date = '2022-12-20'
+end_date = '2022-12-21'
 
 # Happy Emoticons
 emoticons_happy = set([
@@ -146,7 +146,7 @@ def write_tweets(keyword, file):
         df = pd.DataFrame(columns=COLS)
     #page attribute in tweepy.cursor and iteration
     for page in tweepy.Cursor(api.search_tweets, q=keyword,
-                              count=200, include_ext_edit_control=False, since_id=start_date, tweet_mode="extended").pages(100):
+                              count=10, include_ext_edit_control=False, since_id=start_date, tweet_mode="extended").pages(10):
         for status in page:
             new_entry = []
             status = status._json
@@ -207,8 +207,8 @@ def write_tweets(keyword, file):
     df.to_csv(csvFile, mode='a', columns=COLS, index=False, encoding="utf-8")
 
 #declare keywords as a query for three categories
-piala_dunia_keywords = '#PialaDunia2022 OR ((#PialaDunia2022 OR PialaDunia2022) AND (FIFA OR Qatar))'
+jakarta_keywords = '#PialaDunia2022 OR ((#WorldCup2022 OR WorldCup2022) AND (WorldcupQatar2022 OR #WorldcupQatar2022)) OR PialaDunia2022 '
 
 #call main method passing keywords and file path
 
-write_tweets(piala_dunia_keywords,piala_dunia)
+write_tweets(jakarta_keywords,jakarta)

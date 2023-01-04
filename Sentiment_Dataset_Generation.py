@@ -37,7 +37,7 @@ if not os.path.exists('data'):
 if not os.path.exists('data/data_extraction'):
     os.mkdir('data/data_extraction')
 
-jakarta = "data/data_extraction/tes3.csv"
+jakarta = "data/data_extraction/piala_dunia4.csv"
 
 #columns of the csv file
 COLS = ['id', 'created_at', 'source', 'original_text','clean_text',  'lang',
@@ -45,8 +45,8 @@ COLS = ['id', 'created_at', 'source', 'original_text','clean_text',  'lang',
         'user_mentions', 'place', 'place_coord_boundaries']
 
 #set two date variables for date range
-start_date = '2022-12-20'
-end_date = '2022-12-21'
+start_date = '2022-11-20'
+end_date = '2022-12-20'
 
 # Happy Emoticons
 emoticons_happy = set([
@@ -146,7 +146,7 @@ def write_tweets(keyword, file):
         df = pd.DataFrame(columns=COLS)
     #page attribute in tweepy.cursor and iteration
     for page in tweepy.Cursor(api.search_tweets, q=keyword,
-                              count=10, include_ext_edit_control=False, since_id=start_date, tweet_mode="extended").pages(10):
+                              count=200, include_ext_edit_control=False, since_id=start_date, tweet_mode="extended").pages(100):
         for status in page:
             new_entry = []
             status = status._json
@@ -207,7 +207,7 @@ def write_tweets(keyword, file):
     df.to_csv(csvFile, mode='a', columns=COLS, index=False, encoding="utf-8")
 
 #declare keywords as a query for three categories
-jakarta_keywords = '#PialaDunia2022 OR ((#WorldCup2022 OR WorldCup2022) AND (WorldcupQatar2022 OR #WorldcupQatar2022)) OR PialaDunia2022 '
+jakarta_keywords = '#PialaDunia2022 OR ((#WorldCup2022 OR WorldCup2022) AND (WorldcupQatar2022 OR #WorldcupQatar2022)) OR ((#pildun OR pildun) AND (qatar OR #qatar)) OR PialaDunia2022 '
 
 #call main method passing keywords and file path
 
